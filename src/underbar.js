@@ -24,10 +24,10 @@
    * you proceed. Skipping this step will lead to considerably more difficulty
    * implementing the sections you are responsible for.
    */
-   *
+   /*
    * IMPORTANT NOTE!
    * ===========
-   *
+   /*
    * The .first function is implemented for you, to help guide you toward success
    * in your work on the following functions. Whenever you see a portion of the
    * assignment pre-completed, be sure to read and understand it fully before
@@ -61,17 +61,12 @@
      for(var i = 0; i < collection.length; i++){
        iterator(collection[i], i, collection);
      }
-   } else
-
-    for(let i in collection){
-      iterator(collection[i], i, collection);
+   } else{
+    for(let key in collection){
+      iterator(collection[key], key, collection);
     }
    }
   };
-
-
-
-
 
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
@@ -92,24 +87,53 @@
 
   // Return all elements of an array that pass a truth test.
   _.filter = function(collection, test) {
+    var result = [];
+    _.each(collection, function(item){
+     if(test(item)){
+       result.push(item);
+     }
+    })
+      return result;
   };
 
+
   // Return all elements of an array that don't pass a truth test.
-  _.reject = function(collection, test) {
+  _.reject = function(collection, test){
+    var result = [];
+    _.filter(collection, function(item){
+      if(!test(item)){
+        result.push(item);
+      }
+    })
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+return result;
   };
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var result = [];
+    var wasFound;
+      _.each(array, function(item){
+        wasFound = _.indexOf(result, item);
+          if(wasFound === -1){
+          result.push(item);
+          }
+      })
+      return result;
   };
 
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
+    var result = [];
+      _.each(collection, function(item){
+           result.push(iterator(item));
+      })
     // map() is a useful primitive iteration function that works a lot
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
+  return result;
   };
 
   /*
@@ -118,7 +142,7 @@
    * as an example of this.
    */
 
-  // Takes an array of objects and returns and array of the values of
+  // Takes an array of objects and returns an array of the values of
   // a certain property in it. E.g. take an array of people and return
   // an array of just their ages
   _.pluck = function(collection, key) {
